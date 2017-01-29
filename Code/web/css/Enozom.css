@@ -24,3 +24,51 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.filter-btn{
+    margin-bottom:10px;
+}
+.portlet>.portlet-title>.tools>a.expand {
+    background-image: none;
+        width: 80px;
+     visibility: visible; 
+}
+.portlet>.portlet-title>.tool>a.collapse {
+    background-image: none;
+        width: 80px;
+    visibility: visible;
+}
+.portlet>.portlet-title>.tool>a {
+    display: inline-block;
+    height: 31px;
+    margin-left: 0px;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+.portlet.light>.portlet-title>.tool {
+    padding: 10px 0 13px;
+    margin-top: 2px;
+    width: 80px;
+}
+components.min.css:1
+.portlet>.portlet-title>.tool {
+    float: right;
+    display: inline-block;
+    padding: 12px 0 8px;
+      
+}
+.tool{
+      float:left!important;
+}
+
+.portlet.light.bordered {
+     border: 0px solid #e7ecf1!important; 
+}
+components.min.css:1
+.portlet.light {
+    padding: 0px 0px 0px; 
+     background-color: #fff; 
+}
+components.min.css:1
+.portlet.bordered {
+     border-left: 0px solid #e6e9ec!important; 
+}

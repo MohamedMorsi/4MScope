@@ -195,6 +195,57 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 }]
             }
         })
+                //Adapt-Strap
+        .state('gridAddEdit', {
+            url: "/gridAddEdit.html",
+            templateUrl: "views/gridAddEdit.html",
+            data: { pageTitle: 'gridAddEdit' },
+            controller: "ListController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        name: 'enozomApp',
+                        files: [
+                            'js/controllers/ListController.js'
+                        ]
+                    }]);
+                }]
+            }
+        })
+                //Adapt-Strap
+        .state('gridFilter', {
+            url: "/gridFilter.html",
+            templateUrl: "views/gridFilter.html",
+            data: { pageTitle: 'grid Filter' },
+            controller: "ListController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        name: 'enozomApp',
+                        files: [
+                            'js/controllers/ListController.js'
+                        ]
+                    }]);
+                }]
+            }
+        })
+    .state('Add', {
+        url: "/Add.html",
+        templateUrl: "views/Add.html",
+        data: { pageTitle: 'grid Add' },
+        controller: "ListController",
+        resolve: {
+            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'enozomApp',
+                    files: [
+                        'js/controllers/ListController.js'
+                    ]
+                }]);
+            }]
+        }
+    })
+
 
 
 }]);
