@@ -11,7 +11,7 @@ Like: https://www.facebook.com/Enozom
 <!--[if IE 8]> <html lang="en" class="ie8 no-js" data-ng-app="enozomApp"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js" data-ng-app="enozomApp"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en" data-ng-app="enozomApp">
+<html lang="en" data-ng-app="loginApp">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 
@@ -44,7 +44,7 @@ Like: https://www.facebook.com/Enozom
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="page-md login" >
+<body class="page-md login" data-ng-controller="LoginController">
     <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
     <div class="menu-toggler sidebar-toggler">
     </div>
@@ -60,26 +60,26 @@ Like: https://www.facebook.com/Enozom
     <!-- BEGIN LOGIN -->
         <div class="content ">
             <!-- BEGIN LOGIN FORM -->
-            <form ng-submit="login()">
+            <form ng-submit="login()" name="form" class="form-horizontal form-bordered ng-pristine ng-valid" novalidate>
                 <h3 class="form-title">
                     <span class="form-title">Welcome.</span>
                     <span class="form-subtitle">Please login.</span>
                 </h3>
-                <div class="alert alert-danger" style="display:none;">
+                <div class="alert alert-danger" ng-show="error">
                     <span>
-                        incorrect username or password
+                        {{'error'|translate}}
                     </span>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                     <label class="control-label visible-ie8 visible-ie9">Username</label>
                     <input id="username" type="text" placeholder="Username" name="username" class="form-control form-control-solid placeholder-no-fix" autocomplete="off" ng-model="username" />
-                    <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Required</span>
+                    <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">{{'username_required'|translate}}</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Password</label>
                     <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" ng-model="password" />
-                    <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Required</span>
+                    <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">{{'password_required'|translate}}</span>
                 </div>
                 <div class="form-actions" style="border-bottom: 0px;">
                     <button ng-disabled="isDisabled" type="submit" class="btn btn-primary btn-block uppercase">Login</button>
@@ -94,33 +94,31 @@ Like: https://www.facebook.com/Enozom
     <![endif]-->
     <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="tex/javascript"></script>
     <!-- END CORE JQUERY PLUGINS -->
     <!-- BEGIN CORE ANGULARJS PLUGINS -->
     <script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 
-    <!-- adapt-strap -->
-    <script src="js/scripts/adapt-strap.min.js"></script>
-    <script src="js/scripts/adapt-strap.tpl.min.js"></script>
-    <link rel="stylesheet" href="css/adapt-strap.min.css" />
 
+    <script src="js/services/SharedModule.js" type="text/javascript"></script>
+    <script src="js/loginApp.js" type="text/javascript"></script>
+    <script src="js/login_directives.js" type="text/javascript"></script>   
     <!-- END CORE ANGULARJS PLUGINS -->
     <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
-    <script src="js/app.js" type="text/javascript"></script>
-    <script src="js/directives.js" type="text/javascript"></script>
+    <script src="js/translations/ar.js" type="text/javascript"></script>
+    <script src="js/translations/en.js" type="text/javascript"></script>
+    <script src="js/translations/translation.module.js" type="text/javascript"></script>
+    <script src="js/translations/translation.controller.js" type="text/javascript"></script>
+
+    <script src="assets/global/plugins/angularjs/angular-translate.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/angularjs/angular-cookies.min.js" type="text/javascript"></script>
+
+    <script src="js/controllers/global/LoginController.js" type="text/javascript"></script>
+    <script src="js/factories/global/LoginFactory.js" type="text/javascript"></script>
     <!-- END APP LEVEL ANGULARJS SCRIPTS -->
-    <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
-    <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
-    <!-- END APP LEVEL JQUERY SCRIPTS -->
+    <script src="assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 
     <!-- END JAVASCRIPTS -->
 </body>

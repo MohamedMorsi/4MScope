@@ -8,6 +8,9 @@ var enozomApp = angular.module("enozomApp", [
     "ui.bootstrap", 
     "oc.lazyLoad",  
     "ngSanitize",
+    'app.translation',
+    'ngCookies',
+    'sharedModule',
     "adaptv.adaptStrap"
 ]); 
 
@@ -80,6 +83,8 @@ enozomApp.factory('settings', ['$rootScope', function($rootScope) {
         assetsPath: 'assets',
         globalPath: 'assets/global',
         layoutPath: 'assets/layouts/layout',
+        globalDirection: 'ltr',
+        globalLang: 'en'
     };
 
     $rootScope.settings = settings;
@@ -124,13 +129,6 @@ enozomApp.controller('QuickSidebarController', ['$scope', function($scope) {
     });
 }]);
 
-/* Setup Layout Part - Theme Panel */
-enozomApp.controller('ThemePanelController', ['$scope', function($scope) {    
-    $scope.$on('$includeContentLoaded', function() {
-        Demo.init(); // init theme panel
-    });
-}]);
-
 /* Setup Layout Part - Footer */
 enozomApp.controller('FooterController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
@@ -138,120 +136,51 @@ enozomApp.controller('FooterController', ['$scope', function($scope) {
     });
 }]);
 
-/* Setup Rounting For All Pages */
-enozomApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-    // Redirect any unmatched url
-    $urlRouterProvider.otherwise("/ui_bootstrap.html");
-    
-    $stateProvider
 
-        // UI Bootstrap
-        .state('uibootstrap', {
-            url: "/ui_bootstrap.html",
-            templateUrl: "views/ui_bootstrap.html",
-            data: {pageTitle: 'AngularJS UI Bootstrap'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'enozomApp',
-                        files: [
-                            'js/controllers/GeneralPageController.js'
-                        ] 
-                    }]);
-                }] 
-            }
-        })
-        .state('profile', {
-            url: "/profile.html",
-            templateUrl: "views/profile.html",
-            data: { pageTitle: 'User Profile' },
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'enozomApp',
-                        files: [
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-            //Adapt-Strap
-        .state('adaptstrap', {
-            url: "/list.html",
-            templateUrl: "views/list.html",
-            data: { pageTitle: 'Adapt-Strap' },
-            controller: "ListController",
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'enozomApp',
-                        files: [
-                            'js/controllers/ListController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-                //Adapt-Strap
-        .state('gridAddEdit', {
-            url: "/gridAddEdit.html",
-            templateUrl: "views/gridAddEdit.html",
-            data: { pageTitle: 'gridAddEdit' },
-            controller: "ListController",
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'enozomApp',
-                        files: [
-                            'js/controllers/ListController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-                //Adapt-Strap
-        .state('gridFilter', {
-            url: "/gridFilter.html",
-            templateUrl: "views/gridFilter.html",
-            data: { pageTitle: 'grid Filter' },
-            controller: "ListController",
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'enozomApp',
-                        files: [
-                            'js/controllers/ListController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-    .state('Add', {
-        url: "/Add.html",
-        templateUrl: "views/Add.html",
-        data: { pageTitle: 'grid Add' },
-        controller: "ListController",
-        resolve: {
-            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                return $ocLazyLoad.load([{
-                    name: 'enozomApp',
-                    files: [
-                        'js/controllers/ListController.js'
-                    ]
-                }]);
-            }]
-        }
-    })
-
-
-
-}]);
 
 /* Init global settings and run the app */
-enozomApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
+enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore", "$window", function ($rootScope, settings, $state, $translate, $cookieStore, $window) {
     $rootScope.$state = $state; // state to be accessed from view
+    $translate.use(settings.globalLang);
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        // redirect to login page if not logged in    
+        $rootScope.checkAccess(event, toState, toParams, fromState, fromParams);
+    });
+    $rootScope.checkAccess = function (event, toState, toParams, fromState, fromParams) {
+        //if not logged in
+        if (!$cookieStore.get('key')) {
+            // window.location = "login.html";
+            $window.location.href = "login.html";
+
+        }
+        //if logged in 
+        else {
+            //if not public page
+            if (toState.data.right * 1 !== 0) {
+                $http.get(initContext.get().apiBaseURL + 'Roles/CanAccess/' + toState.data.right).
+                then(function (response) {
+                    bypass = true;
+                    if (!response.data) {
+                        $location.path('/Denied').replace();
+
+                    }
+                    if (!fromState.abstract) {
+                        $rootScope.previousState = fromState;
+                        $rootScope.previousParams = fromParams;
+                    }
+                });
+            }
+        }
+    }
+    $rootScope.getCurrentDateString = function () {
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        };
+        var day = d.getDate();
+        return year + "-" + month + "-" + day;
+    }
     $rootScope.$settings = settings; // state to be accessed from view
 }]);

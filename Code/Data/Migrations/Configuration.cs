@@ -1,4 +1,4 @@
-namespace Data.Migrations
+﻿namespace Data.Migrations
 {
     using Model;
     using System;
@@ -28,7 +28,7 @@ namespace Data.Migrations
                 UserName = "yasser.mohamed",
                 FullName = "Yasser Mohammed ElSayed",
                 IsActive = true,
-                UserPassword = "1230",
+                UserPassword = "퍋鱶ਜ਼᧛䎇鰀粃잼",
                 RoleID = 1
             });
             context.Commit();

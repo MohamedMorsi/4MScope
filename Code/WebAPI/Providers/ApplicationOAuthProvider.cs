@@ -42,7 +42,7 @@ namespace WebAPI.Providers
             //TODO: Add user check
 
             string json = string.Empty;
-            Model.User User = null;//_userService.UserLogin(context.UserName, _securityHelper.Md5Encryption(context.Password));
+            Model.User User = _userService.UserLogin(context.UserName, _securityHelper.Md5Encryption(context.Password));
             if (User != null)
             {
                 ClaimsIdentity oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
