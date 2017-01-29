@@ -1,0 +1,26 @@
+﻿<h3 class="page-title">
+    Adapt-Strap
+    <small>Lightweight UI Components/utilities based on AngularJs 1.2+ & Bootstrap 3</small>
+</h3>
+
+<p class="text-muted">
+    Cars Selected: <span class="badge" ng-bind="models.selectedCars.length"></span>
+    &nbsp;&nbsp;&nbsp;&nbsp;Search: <input type="text" id="tableLiteSearch" placeholder=" enter search text " ng-model="models.searchText" />
+</p>
+
+<!-- ========== Usage ========== -->
+
+<div class="row">
+
+    <ad-table-lite table-name="carsForSale"
+                   enable-column-search="false"
+                   column-definition="carsTableColumnDefinition"
+                   local-data-source="models.carsForSale"
+                   pagination-btn-group-classes="pagination pagination-sm"
+                   table-classes="table table-bordered"
+                   items-not-found-message="Cars Not Found"
+                   snug-sort-icons="true"
+                   search-text="models.searchText">
+    </ad-table-lite>
+
+</div>
