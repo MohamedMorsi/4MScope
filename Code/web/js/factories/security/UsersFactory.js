@@ -1,4 +1,4 @@
-﻿enozomApp.factory('UsersFactory', ['$http', 'settings', 'initContext', '$cookieStore'
+﻿angular.module('enozomApp').factory('UsersFactory', ['$http', 'settings', 'initContext', '$cookieStore'
     , 'RequestFactory', function ($http, settings, initContext, $cookieStore, RequestFactory) {
     return {
         getCurrentUser: function () {

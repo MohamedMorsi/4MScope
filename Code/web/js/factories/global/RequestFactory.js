@@ -1,4 +1,4 @@
-﻿enozomApp.factory('RequestFactory', ['$http', '$rootScope', 'settings', '$cookieStore', '$location', '$translate', 'initContext', function ($http, $rootScope, settings, $cookieStore, $location, $translate, initContext) {
+﻿angular.module('enozomApp').factory('RequestFactory', ['$http', '$rootScope', 'settings', '$cookieStore', '$location', '$translate', 'initContext', function ($http, $rootScope, settings, $cookieStore, $location, $translate, initContext) {
         return {
             SendRequest: function (method, url, data, responseType) {
 

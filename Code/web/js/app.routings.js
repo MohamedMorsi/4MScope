@@ -1,6 +1,4 @@
-﻿/// <reference path="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" />
-/// <reference path="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" />
-	/* Setup Rounting For All Pages */
+﻿/* Setup Rounting For All Pages */
 enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider,$httpProvider) {
 	    
 	    $httpProvider.interceptors.push('sessionInjector');

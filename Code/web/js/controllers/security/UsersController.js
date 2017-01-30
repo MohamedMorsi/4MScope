@@ -1,4 +1,4 @@
-﻿enozomApp.controller('UsersController', ['$rootScope', '$scope', 'CRUDFactory', 'settings', '$location', '$translate', 'i18nService', function ($rootScope, $scope, CRUDFactory, settings, $location, $translate, i18nService) {
+﻿angular.module('enozomApp').controller('UsersController', ['$rootScope', '$scope', 'CRUDFactory', 'settings', '$location', '$translate', 'i18nService', function ($rootScope, $scope, CRUDFactory, settings, $location, $translate, i18nService) {
 
     $scope.text = 'User';
     $scope.SeeText = $translate.instant('see_users');

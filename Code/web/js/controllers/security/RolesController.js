@@ -1,4 +1,4 @@
-﻿enozomApp.controller('RolesController', ['$rootScope', '$scope', 'CRUDFactory', 'settings', '$location', '$translate', 'i18nService', function ($rootScope, $scope, CRUDFactory, settings, $location, $translate, i18nService) {
+﻿angular.module('enozomApp').controller('RolesController', ['$rootScope', '$scope', 'CRUDFactory', 'settings', '$location', '$translate', 'i18nService', function ($rootScope, $scope, CRUDFactory, settings, $location, $translate, i18nService) {
 
     $scope.text = 'Role';
     $scope.SeeText = $translate.instant('see_roles');

@@ -1,4 +1,4 @@
-﻿enozomApp.factory('CRUDFactory', ['$http', '$rootScope', 'settings', '$cookieStore', '$location', 'initContext', 'RequestFactory', function ($http, $rootScope, settings, $cookieStore, $location, initContext, RequestFactory) {
+﻿angular.module('enozomApp').factory('CRUDFactory', ['$http', '$rootScope', 'settings', '$cookieStore', '$location', 'initContext', 'RequestFactory', function ($http, $rootScope, settings, $cookieStore, $location, initContext, RequestFactory) {
     return {
         getList: function (ControllerName) {
             return RequestFactory.SendRequest('GET', initContext.get().apiBaseURL + ControllerName , null, null);

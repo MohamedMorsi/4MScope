@@ -107,25 +107,23 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-enozomApp.controller('HeaderController', ['$scope', function($scope) {
+enozomApp.controller('HeaderController', ['$scope', '$rootScope', 'UsersFactory', 'initContext', function ($scope, $rootScope, UsersFactory, initContext) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
+        UsersFactory.getCurrentUser().success(function (data, status, headers, config) {
+            $rootScope.user = data;
+        });
     });
+    $scope.Logout = initContext.Logout;
+    $scope.EditProfile = function () {
+        $location.path('profile.html');
+    }
 }]);
 
 /* Setup Layout Part - Sidebar */
 enozomApp.controller('SidebarController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar(); // init sidebar
-    });
-}]);
-
-/* Setup Layout Part - Quick Sidebar */
-enozomApp.controller('QuickSidebarController', ['$scope', function($scope) {    
-    $scope.$on('$includeContentLoaded', function() {
-       setTimeout(function(){
-            QuickSidebar.init(); // init quick sidebar        
-        }, 2000)
     });
 }]);
 
@@ -139,7 +137,7 @@ enozomApp.controller('FooterController', ['$scope', function($scope) {
 
 
 /* Init global settings and run the app */
-enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore", "$window", function ($rootScope, settings, $state, $translate, $cookieStore, $window) {
+enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore", "$window", "$http", "initContext", function ($rootScope, settings, $state, $translate, $cookieStore, $window, $http, initContext) {
     $rootScope.$state = $state; // state to be accessed from view
     $translate.use(settings.globalLang);
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -155,6 +153,10 @@ enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore",
         }
         //if logged in 
         else {
+            if (!fromState.abstract) {
+                $rootScope.previousState = fromState;
+                $rootScope.previousParams = fromParams;
+            }
             //if not public page
             if (toState.data.right * 1 !== 0) {
                 $http.get(initContext.get().apiBaseURL + 'Roles/CanAccess/' + toState.data.right).
@@ -164,10 +166,7 @@ enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore",
                         $location.path('/Denied').replace();
 
                     }
-                    if (!fromState.abstract) {
-                        $rootScope.previousState = fromState;
-                        $rootScope.previousParams = fromParams;
-                    }
+
                 });
             }
         }

@@ -1,4 +1,4 @@
-﻿enozomApp.factory('RolesFactory', ['$http', 'settings', 'initContext', '$cookieStore'
+﻿angular.module('enozomApp').factory('RolesFactory', ['$http', 'settings', 'initContext', '$cookieStore'
     , 'RequestFactory', function ($http, settings, initContext, $cookieStore, RequestFactory) {
     return {
         getFeaturesRights: function () {
