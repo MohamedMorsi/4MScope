@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{899B236A-5332-4311-A1C5-CF955C15DA93}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "enozom-empty", "http://localhost/enozom-empty", "{0F722FF5-97CA-414B-A238-669FDB21DDAE}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "enozom-empty", "http://localhost/enozom-empty", "{5488912E-D417-4E64-9180-E55861B90D1D}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
@@ -74,10 +74,10 @@ Global
 		{899B236A-5332-4311-A1C5-CF955C15DA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{899B236A-5332-4311-A1C5-CF955C15DA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{899B236A-5332-4311-A1C5-CF955C15DA93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F722FF5-97CA-414B-A238-669FDB21DDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F722FF5-97CA-414B-A238-669FDB21DDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F722FF5-97CA-414B-A238-669FDB21DDAE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F722FF5-97CA-414B-A238-669FDB21DDAE}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{5488912E-D417-4E64-9180-E55861B90D1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5488912E-D417-4E64-9180-E55861B90D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5488912E-D417-4E64-9180-E55861B90D1D}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5488912E-D417-4E64-9180-E55861B90D1D}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{B99E3CF1-3A2C-4260-962A-7773C4A632BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B99E3CF1-3A2C-4260-962A-7773C4A632BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B99E3CF1-3A2C-4260-962A-7773C4A632BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
