@@ -11,6 +11,7 @@ namespace Model
         public int FeatureID { get; set; }
         public string FeatureName { get; set; }
         public string FeatureNameAr { get; set; }
+        public string MenuIcon { get; set; }
 
         public List<Right> Rights { get; set; }
 

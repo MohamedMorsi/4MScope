@@ -9,10 +9,13 @@ namespace Model
     public partial class Right : BaseModel
     {
         public int RightID { get; set; }
-        public int FeatureID { get; set; }
         public string RightCode { get; set; }
+        public int FeatureID { get; set; }
+        public int RightOrder { get; set; }
         public string RightName { get; set; }
-        public string RightAr { get; set; }
+        public string RightNameAr { get; set; }
+        public string MenuIcon { get; set; }
+        public string RightURL { get; set; }
 
         public Feature Feature { get; set; }
         public List<RoleRight> RoleRights { get; set; }

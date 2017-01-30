@@ -27,9 +27,10 @@ namespace Data.Repositories
                 {
                     f.FeatureName,
                     f.FeatureNameAr,
+                    f.MenuIcon,
                     Rights = f.Rights.Where(r =>r.RoleRights.Any(rr => rr.RoleID == RoleId))
-                        .Select(right => new { right.RightID, right.RightName, right.RightAr, right.RightCode })
-                       // .OrderBy(rightOrder => rightOrder.RightOrderNumber)
+                        .Select(right => new { right.RightID, right.RightName, right.RightNameAr,right.RightCode ,right.RightOrder,right.MenuIcon,right.RightURL })
+                        .OrderBy(rightOrder => rightOrder.RightOrder)
                 });
         }
 

@@ -121,9 +121,13 @@ enozomApp.controller('HeaderController', ['$scope', '$rootScope', 'UsersFactory'
 }]);
 
 /* Setup Layout Part - Sidebar */
-enozomApp.controller('SidebarController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+enozomApp.controller('SidebarController', ['$scope', 'RolesFactory', '$rootScope', function ($scope,RolesFactory, $rootScope) {
+    $scope.$on('$includeContentLoaded', function () {
+        RolesFactory.getRoleSideMenu().success(function (data, status, headers, config) {
+            $rootScope.features = data;
+        });
         Layout.initSidebar(); // init sidebar
+
     });
 }]);
 

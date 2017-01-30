@@ -14,55 +14,23 @@
             <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
             <!-- END RESPONSIVE QUICK SEARCH FORM -->
         </li>
-        <li class="nav-item">
+        <li class="nav-item" ng-repeat="feature in features">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-settings"></i>
-                <span class="title">Main Menu</span>
+                <i class="{{feature.MenuIcon}}"></i>
+                <span class="title">{{feature.FeatureName}}</span>
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
-                <li>
-                    <a href="#/ui_bootstrap.html">
-                        <i class="icon-puzzle"></i>Item1</span>
+                <li ng-repeat="right in feature.Rights">
+                    <a href="{{right.RightURL}}">
+                        <i class="{{right.MenuIcon}}"></i>{{right.RightName}}</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#/profile.html" id="sidebar_menu_link_profile">
-                        <i class="icon-user"></i>
-                        <span class="title">User Profile</span>
-                    </a>
-
-                </li>
+                
 
             </ul>
         </li>
-        <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-settings"></i>
-                <span class="title">Grid Menu</span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="#/gridAddEdit.html">
-                        <i class="icon-puzzle"></i>Grid add/edit</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#/gridFilter.html">
-                        <i class="icon-puzzle"></i>Grid Filter</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#/list.html">
-                        <i class="icon-puzzle"></i>Grid</span>
-                    </a>
-
-                </li>
-
-            </ul>
-
-        </li>
+        
     </ul>
     <!-- END SIDEBAR MENU -->
 </div>
