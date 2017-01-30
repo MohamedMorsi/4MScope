@@ -72,3 +72,6 @@ components.min.css:1
 .portlet.bordered {
      border-left: 0px solid #e6e9ec!important; 
 }
+.page-header.navbar .top-menu .navbar-nav>li.dropdown>.dropdown-toggle:last-child {
+    padding-right: 7px;
+}
