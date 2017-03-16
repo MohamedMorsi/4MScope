@@ -24,6 +24,14 @@ namespace WebAPI.Controllers
             return _userService.GetAll();
         }
 
+        // GET api/Users/1/10
+        [HttpGet]
+        [Route("api/Users/{PageNumber}/{PageSize}/{SortBy}")]
+        [ResponseType(typeof(List<User>))]
+        public List<User> GetUsers(int PageNumber, int PageSize, string SortBy = "")
+        {
+            return _userService.GetAll(PageNumber,PageSize,SortBy);
+        }
         // GET api/Users/5
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(int id)

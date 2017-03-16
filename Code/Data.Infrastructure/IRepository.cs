@@ -22,6 +22,8 @@ namespace Data.Infrastructure
         T Get(Expression<Func<T, bool>> where);
         // Gets all entities of type T
         IEnumerable<T> GetAll();
+        //Gets all entities with paging with type T
+        IEnumerable<T> GetAll(int PageNumber, int PageSize,string SortBy);
         // Gets entities using delegate
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
     }

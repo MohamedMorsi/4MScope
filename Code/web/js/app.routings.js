@@ -8,23 +8,6 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
 
 	    $stateProvider
 
-        // UI Bootstrap
-        .state('uibootstrap', {
-            url: "/ui_bootstrap.html",
-            templateUrl: "views/ui_bootstrap.html",
-            data: { pageTitle: 'AngularJS UI Bootstrap' },
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'enozomApp',
-                        files: [
-                            'js/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
         //Adapt-Strap
         .state('adaptstrap', {
             url: "/list.html",
@@ -93,9 +76,9 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
             }
         })
         .state('users', {
-            url: "/users",
+            url: "/users.html",
             templateUrl: "views/global/List.html",
-            data: { pageTitle: 'Users List', right: Rights.users },
+            data: { pageTitle: 'Users List', right: Rights.USERS },
             controller: "UsersController",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -113,9 +96,9 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
             }
         })
         .state('UserAdd', {
-            url: "/User",
+            url: "/user.html",
             templateUrl: "views/security/User.html",
-            data: { pageTitle: 'Add User', right: Rights.users },
+            data: { pageTitle: 'Add User', right: Rights.USERS },
             controller: "ManageUserController",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -133,9 +116,9 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
             }
         })
         .state('UserEdit', {
-            url: "/User/:id",
+            url: "/user.html/:id",
             templateUrl: "views/security/User.html",
-            data: { pageTitle: 'Edit User', right: Rights.users },
+            data: { pageTitle: 'Edit User', right: Rights.USERS },
             controller: "ManageUserController",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -153,9 +136,9 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
             }
         })
         .state('roles', {
-            url: "/roles",
-            templateUrl: "views/global/List.html",
-            data: { pageTitle: 'Roles List', right: Rights.roles },
+            url: "/roles.html",
+            templateUrl: "views/security/rolesList.html",
+            data: { pageTitle: 'Roles List', right: Rights.ROLES },
             controller: "RolesController",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -170,9 +153,9 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
             }
         })
         .state('RoleAdd', {
-            url: "/Role",
+            url: "/role.html",
             templateUrl: "views/security/Role.html",
-            data: { pageTitle: 'Add Role', right: Rights.roles },
+            data: { pageTitle: 'Add Role', right: Rights.ROLES },
             controller: "ManageRoleController",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -187,10 +170,9 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
             }
         })
         .state('RoleEdit', {
-            url: "/Role/:id",
+            url: "/role.html/:id",
             templateUrl: "views/security/Role.html",
-            templateUrl: "views/security/Role.html",
-            data: { pageTitle: 'Edit Role', right: Rights.roles },
+            data: { pageTitle: 'Edit Role', right: Rights.ROLES },
             controller: "ManageRoleController",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -205,8 +187,8 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
             }
         })
 
-        .state('Denied', {
-            url: "/Denied",
+        .state('denied', {
+            url: "/denied.html",
             templateUrl: "views/global/Denied.html",
             data: { pageTitle: 'Access Denied', right: Rights.PUBLIC },
             controller: "DeniedController",

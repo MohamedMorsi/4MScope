@@ -13,6 +13,7 @@ namespace Services
     public interface IUserService
     {
         List<User> GetAll();
+        List<User> GetAll(int PageNumber, int PageSize, string SortBy);
         User GetUser(int id);
         void CreateUser(User user);
         void UpdateUser(User user);

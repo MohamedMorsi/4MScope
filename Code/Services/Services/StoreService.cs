@@ -28,7 +28,11 @@ namespace Services
             List<Store> Stores = StoreRepository.GetAll().ToList();
             return Stores;
         }
-
+        public List<Store> GetAll(int PageNumber, int PageSize, string SortBy = "")
+        {
+            List<Store> Stores = StoreRepository.GetAll(PageNumber,PageSize,SortBy).ToList();
+            return Stores;
+        }
         public Store GetStore(int id)
         {
             var Store = StoreRepository.GetById(id);

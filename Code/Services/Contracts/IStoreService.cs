@@ -13,6 +13,7 @@ namespace Services
     public interface IStoreService
     {
         List<Store> GetAll();
+        List<Store> GetAll(int PageNumber, int PageSize, string SortBy);
         Store GetStore(int id);
         void CreateStore(Store Store);
         void UpdateStore(Store Store);

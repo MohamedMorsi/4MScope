@@ -27,7 +27,12 @@ namespace Services
         {
             List<User> Users = userRepository.GetAll().ToList();
             return Users;
-        } 
+        }
+        public List<User> GetAll(int PageNumber, int PageSize, string SortBy = "")
+        {
+            List<User> Users = userRepository.GetAll(PageNumber, PageSize,SortBy).ToList();
+            return Users;
+        }
         public User GetUser(int id)
         {
             var application = userRepository.GetById(id);

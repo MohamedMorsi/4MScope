@@ -1,16 +1,12 @@
-﻿angular.module('enozomApp').controller('RolesController', ['$rootScope', '$scope', 'CRUDFactory', 'settings', '$location', '$translate', 'i18nService', function ($rootScope, $scope, CRUDFactory, settings, $location, $translate, i18nService) {
+﻿angular.module('enozomApp').controller('RolesController', ['$rootScope', '$scope', 'CRUDFactory', 'settings', '$location', '$translate', function ($rootScope, $scope, CRUDFactory, settings, $location, $translate) {
 
     $scope.text = 'Role';
     $scope.SeeText = $translate.instant('see_roles');
     $scope.AddText = $translate.instant('add_role');
     $scope.ListText = $translate.instant('list_roles');
     $scope.dir = settings.globalDirection;
-    $scope.langs = i18nService.getAllLangs();
     $scope.lang = settings.globalLang;
     $scope.bread_crumb = 'security_panel';
-    //------------------------------Role LIST PAGE---------------------------//
-    //------------------------------Role LIST PAGE---------------------------//
-    //------------------------------Role LIST PAGE---------------------------//
     //------------------------------Role LIST PAGE---------------------------//
     $scope.getPage = function () {
         CRUDFactory.getList("Roles").success(function (data, status, headers, config) {
@@ -71,22 +67,30 @@
         }
     }
 
-    $scope.gridOptions = {
-        enableSorting: true,
-        columnDefs: [
-                    { name: $translate.instant('name'), field: 'RoleName', enableHiding: false },
-                    { name: $translate.instant('edit'), displayName: '', cellTemplate: 'views/templates/grid_general/Edit_tpl.html', enableFiltering: false, enableSorting: false, enableHiding: false },
-                    { name: $translate.instant('delete'), displayName: '', cellTemplate: 'views/templates/grid_general/Delete_tpl.html', enableFiltering: false, enableSorting: false, enableHiding: false },
-        ],
-        paginationPageSizes: [settings.pageSize, settings.biggerPageSize],
-        paginationPageSize: settings.pageSize,
-        enableColumnResizing: true,
-        enableFiltering: true,
-        onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
+    $scope.gridOptions = [
+  {
+      columnHeaderDisplayName: 'RoleName',
+      displayProperty: $translate.instant('name'),
+      sortKey: 'RoleName'
+  }
+    ];
+
+    $scope.artistsAjaxConfigSearch = {
+        url: 'http://ws.audioscrobbler.com/2.0/',
+        method: 'JSONP',
+        params: {
+            api_key: '9b0cdcf446cc96dea3e747787ad23575',
+            artist: '50 cent',
+            method: 'artist.search',
+            format: 'json'
+        },
+        paginationConfig: {
+            response: {
+                totalItems: 'results.opensearch:totalResults',
+                itemsLocation: 'results.artistmatches.artist'
+            }
         }
     };
-    $scope.getPage();
 }]);
 
 enozomApp.controller('ManageRoleController', ['$rootScope', '$scope', 'CRUDFactory', '$location', '$stateParams', 'RolesFactory', '$translate', 'i18nService', function ($rootScope, $scope, CRUDFactory, $location, $stateParams, RolesFactory, $translate, i18nService) {

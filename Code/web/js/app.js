@@ -11,7 +11,7 @@ var enozomApp = angular.module("enozomApp", [
     'app.translation',
     'ngCookies',
     'sharedModule',
-    "adaptv.adaptStrap"
+    "ngTable"
 ]); 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */

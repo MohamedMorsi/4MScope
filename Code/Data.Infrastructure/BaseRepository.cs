@@ -79,6 +79,20 @@ namespace Data.Infrastructure
             return dbSet.ToList();
         }
 
+        public virtual IEnumerable<T> GetAll(int PageNumber, int PageSize,string SortBy)
+        {
+            string SortByParam = "CreationDate";
+            if (!string.IsNullOrEmpty(SortBy))
+            {
+                SortByParam = SortBy;
+            }
+
+            var propertyInfo = typeof(T).GetProperty(SortByParam);
+            return dbSet.Take(PageSize)
+                .OrderBy(t=> propertyInfo.GetValue(t, null))
+                .Skip((PageNumber - 1) * PageSize).ToList();
+        }        
+
         public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
         {
             return dbSet.Where(where).ToList();

@@ -25,6 +25,15 @@ namespace WebAPI.Controllers
             return _StoreService.GetAll();
         }
 
+        // GET api/Stores/1/10
+        [HttpGet]
+        [Route("api/Stores/{PageNumber}/{PageSize}/{SortBy}")]
+        [ResponseType(typeof(List<Store>))]
+        public List<Store> GetStores(int PageNumber, int PageSize, string SortBy = "")
+        {
+            return _StoreService.GetAll(PageNumber,PageSize,SortBy);
+        }
+
         // GET api/Users/5
         [ResponseType(typeof(Store))]
         public IHttpActionResult GetStore(int id)

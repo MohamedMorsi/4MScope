@@ -13,6 +13,7 @@ namespace Services
     public interface IRoleService
     {
         List<Role> GetAll();
+        List<Role> GetAll(int PageNumber, int PageSize, string SortBy);
         Role GetRole(int id);
         void CreateRole(Role Role);
         void UpdateRole(Role role);

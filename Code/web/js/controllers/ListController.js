@@ -1,111 +1,130 @@
-﻿angular.module('enozomApp').controller('ListController', ['$rootScope', '$scope', 'settings', function($rootScope, $scope, settings) {
+﻿angular.module("myApp", ["ngTable", "ngTableDemos", "ngSanitize"]);
 
-    $scope.models = {
-        changeInfo: [],
-        searchText: '',
-        carsForSale: [
-          {
-              id: 1,
-              name: 'Audi A4',
-              modelYear: 2009,
-              price: 34000
-          },
-          {
-              id: 2,
-              name: 'BMW 328i',
-              modelYear: 2012,
-              price: 39000
-          },
-          {
-              id: 3,
-              name: 'Audi A6',
-              modelYear: 2012,
-              price: 44000
-          },
-          {
-              id: 4,
-              name: 'Audi S8',
-              modelYear: 2014,
-              price: 100000
-          },
-          {
-              id: 5,
-              name: 'Audi A4',
-              modelYear: 2009,
-              price: 34000
-          },
-          {
-              id: 6,
-              name: 'BMW 328i',
-              modelYear: 2012,
-              price: 39000
-          },
-          {
-              id: 7,
-              name: 'Audi A6',
-              modelYear: 2012,
-              price: 44000
-          },
-          {
-              id: 8,
-              name: 'Audi S8',
-              modelYear: 2014,
-              price: 100000
-          },
-          {
-              id: 9,
-              name: 'Audi A6',
-              modelYear: 2012,
-              price: 44000
-          },
-          {
-              id: 10,
-              name: 'Audi S8',
-              modelYear: 2014,
-              price: 100000
-          },
-          {
-              id: 11,
-              name: 'Audi A6',
-              modelYear: 2012,
-              price: 44000
-          },
-          {
-              id: 12,
-              name: 'Audi S8',
-              modelYear: 2014,
-              price: 100000
-          }
-        ]
-    };
+(function () {
+    "use strict";
 
-    $scope.carsTableColumnDefinition = [
-      {
-          columnHeaderDisplayName: 'Model',
-          displayProperty: 'name',
-          sortKey: 'name'
-      },
-      {
-          columnHeaderTemplate: '<span><i class="glyphicon glyphicon-calendar"></i> Model Year</span>',
-          template: '<strong>{{ item.modelYear }}</strong>',
-          sortKey: 'modelYear'
-      },
-      {
-          columnHeaderTemplateUrl: 'tpl/grid_tpl/priceHeader.html',
-          displayProperty: 'price',
-          sortKey: 'price'
-      },
-      {
-          columnHeaderDisplayName: 'Buy',
-          templateUrl: 'tpl/grid_tpl/buyCell.html'
-      }
-    ];
+    angular.module("myApp").controller("simpleValueDemoController", simpleValueDemoController);
 
+    simpleValueDemoController.$inject = ["NgTableParams", "ngTableSimpleList", "$interpolate", "$sce"];
 
-    // ========== ui handlers ========== //
-    $scope.buyCar = function (car) {
-        alert(car.name);
-    };
+    function simpleValueDemoController(NgTableParams, simpleList, $interpolate, $sce) {
+        var self = this;
 
+        self.cols = [{
+            field: "name",
+            title: "Name",
+            show: true,
+            getValue: htmlValue
+        }, {
+            field: "age",
+            title: "Age",
+            show: true,
+            getValue: interpolatedValue,
+            interpolateExpr: $interpolate("<em class='text-danger'>{{ user.age | number:1}}</em>")
+        }, {
+            field: "money",
+            title: "Money",
+            show: true,
+            getValue: evaluatedValue,
+            valueFormatter: "currency:'$'"
+        }];
+        self.tableParams = new NgTableParams({}, {
+            dataset: simpleList
+        });
 
-}]);
+        function htmlValue($scope, row) {
+            var value = row[this.field];
+            var html = "<a href='https://www.google.co.uk/search?q=" + value + "' target='_blank'><em>" + value + "</em></a>";
+            return $sce.trustAsHtml(html);
+        }
+
+        function evaluatedValue($scope, row) {
+            return $scope.$eval("user." + this.field + " | " + this.valueFormatter, {
+                user: row
+            });
+        }
+
+        function interpolatedValue($scope, row) {
+            return this.interpolateExpr({
+                user: row
+            });
+        }
+    }
+})();
+
+(function () {
+    "use strict";
+
+    angular.module("myApp").controller("advancedValueDemoController", simpleValueDemoController);
+
+    simpleValueDemoController.$inject = ["NgTableParams", "ngTableSimpleList"];
+
+    function simpleValueDemoController(NgTableParams, simpleList) {
+        var self = this;
+
+        self.cols = [{
+            field: "name",
+            title: "Name",
+            show: true,
+            getValue: renderedInput,
+            inputType: "text"
+        }, {
+            field: "age",
+            title: "Age",
+            show: true,
+            getValue: renderedInput,
+            inputType: "number"
+        }, {
+            field: "money",
+            title: "Money",
+            show: true,
+            getValue: renderedInput,
+            disabledExpr: "row.age > 40"
+        }];
+        self.tableParams = new NgTableParams({}, {
+            dataset: simpleList
+        });
+
+        function renderedInput($scope, row) {
+            return "<input type='" + this.inputType + "' class='form-control input-sm' ng-model='row[col.field]' ng-disabled='$eval(col.disabledExpr)'/>";
+        }
+    }
+})();
+
+(function () {
+    "use strict";
+
+    angular.module("myApp").directive("demoBindCompiledHtml", bindCompiledHtml);
+    bindCompiledHtml.$inject = [];
+
+    function bindCompiledHtml() {
+        var directive = {
+            restrict: "A",
+            controller: bindCompiledHtmlController
+        };
+        return directive;
+    }
+
+    bindCompiledHtmlController.$inject = ["$scope", "$element", "$attrs", "$compile"];
+    function bindCompiledHtmlController($scope, $element, $attrs, $compile) {
+        $scope.$watch($attrs.demoBindCompiledHtml, compileHtml);
+
+        function compileHtml(html) {
+            debugger;
+            var compiledElements = $compile(html)($scope);
+            $element.append(compiledElements);
+        }
+    }
+})();
+
+(function () {
+    "use strict";
+
+    angular.module("myApp").run(configureDefaults);
+    configureDefaults.$inject = ["ngTableDefaults"];
+
+    function configureDefaults(ngTableDefaults) {
+        ngTableDefaults.params.count = 5;
+        ngTableDefaults.settings.counts = [];
+    }
+})();

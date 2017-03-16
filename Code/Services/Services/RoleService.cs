@@ -32,6 +32,12 @@ namespace Services
             return Roles;
         }
 
+        public List<Role> GetAll(int PageNumber,int PageSize,string SortBy = "")
+        {
+            List<Role> Roles = RoleRepository.GetAll(PageNumber, PageSize, SortBy).ToList();
+            return Roles;
+        }
+
         public Role GetRole(int id)
         {
             var Role = RoleRepository.GetById(id);

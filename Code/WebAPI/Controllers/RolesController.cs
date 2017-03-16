@@ -23,6 +23,15 @@ namespace WebAPI.Controllers
             return _roleService.GetAll();
         }
 
+        // GET api/Roles/1/10
+        [HttpGet]
+        [Route("api/Roles/{PageNumber}/{PageSize}/{SortBy}")]
+        [ResponseType(typeof(List<Role>))]
+        public List<Role> GetRoles(int PageNumber,int PageSize, string SortBy = "")
+        {
+            return _roleService.GetAll(PageNumber,PageSize,SortBy);
+        }
+
         // GET api/Roles/5
         [ResponseType(typeof(Role))]
         public IHttpActionResult GetRole(int id)

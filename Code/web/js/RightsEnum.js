@@ -1,6 +1,6 @@
 ﻿var Rights = {
     PUBLIC:0,
-    USERS: 1,
-    ROLES: 2
+    ROLES: 1,
+    USERS: 2
 
 }
