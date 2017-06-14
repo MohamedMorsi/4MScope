@@ -4,15 +4,39 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
 	    $httpProvider.interceptors.push('sessionInjector');
 
 	    // Redirect any unmatched url
-	    $urlRouterProvider.otherwise("/profile.html");
+	    $urlRouterProvider.otherwise("/pages/profile.html");
 
 	    $stateProvider
 
+        .state('login', {
+            url: "/login.html",
+            templateUrl: "views/global/login.html",
+            data: { pageTitle: 'Admin Dashboard Template' },
+            controller: 'LoginController',
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        name: 'enozomApp',
+                        files: [
+                            'js/controllers/global/LoginController.js'
+                        ]
+                    }]);
+                }]
+            }
+        })
+
+        .state('pages', {
+            url: '/pages',
+            abstract: true,
+            templateUrl: 'views/global/pages.html',
+            controller: 'AppController'
+        })
         //Adapt-Strap
         .state('adaptstrap', {
             url: "/list.html",
             templateUrl: "views/list.html",
             data: { pageTitle: 'Adapt-Strap' },
+            parent: 'pages',
             controller: "ListController",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -190,6 +214,7 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
         .state('denied', {
             url: "/denied.html",
             templateUrl: "views/global/Denied.html",
+            parent: 'pages',
             data: { pageTitle: 'Access Denied', right: Rights.PUBLIC },
             controller: "DeniedController",
             resolve: {
@@ -208,6 +233,7 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', funct
         .state('profile', {
             url: "/profile.html",
             templateUrl: "views/global/profile.html",
+            parent: 'pages',
             data: { pageTitle: 'Edit User Profile', right: Rights.PUBLIC },
             controller: "ProfileController",
             resolve: {

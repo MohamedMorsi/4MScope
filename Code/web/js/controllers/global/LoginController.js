@@ -1,6 +1,4 @@
-﻿'use strict';
-
-loginApp.controller('LoginController',
+﻿angular.module('enozomApp').controller('LoginController',
     ['$scope', '$rootScope', '$location', 'LoginFactory','$cookieStore','$translate',
     function ($scope, $rootScope, $location, LoginFactory, $cookieStore, $translate) {
         // reset login status

@@ -152,7 +152,7 @@ enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore",
         //if not logged in
         if (!$cookieStore.get('key')) {
             // window.location = "login.html";
-            $window.location.href = "login.html";
+           // $stateProvider.state("login", {});
 
         }
         //if logged in 
