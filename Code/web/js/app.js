@@ -10,8 +10,11 @@ var enozomApp = angular.module("enozomApp", [
     "ngSanitize",
     'app.translation',
     'ngCookies',
-    'sharedModule',
-    "ngTable"
+    "ngTable",
+    'ui.select',
+    'angularSpinner',
+    'ngFileUpload',
+    'thatisuday.dropzone'
 ]); 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -84,7 +87,11 @@ enozomApp.factory('settings', ['$rootScope', function($rootScope) {
         globalPath: 'assets/global',
         layoutPath: 'assets/layouts/layout',
         globalDirection: 'ltr',
-        globalLang: 'en'
+        globalLang: 'ar',
+        pageSize: 10,
+        biggerPageSize: 20,
+        dateFormat: 'dd/MM/yyyy',
+        ServerFormat: "MM/dd/yyyy hh:mm:ss"
     };
 
     $rootScope.settings = settings;
@@ -95,7 +102,7 @@ enozomApp.factory('settings', ['$rootScope', function($rootScope) {
 /* Setup App Main Controller */
 enozomApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$viewContentLoaded', function() {
-        //App.initComponents(); // init core components
+        App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
     });
 }]);
@@ -107,14 +114,18 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-enozomApp.controller('HeaderController', ['$scope', '$rootScope', 'UsersFactory', 'initContext', function ($scope, $rootScope, UsersFactory, initContext) {
+enozomApp.controller('HeaderController', ['$scope', '$rootScope', 'UsersFactory', 'appConfigs', '$cookieStore', '$state', function ($scope, $rootScope, UsersFactory, appConfigs, $cookieStore, $state) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         UsersFactory.getCurrentUser().success(function (data, status, headers, config) {
             $rootScope.user = data;
         });
     });
-    $scope.Logout = initContext.Logout;
+    $scope.Logout = function () {
+        $cookieStore.remove("key");
+        $state.go('login');
+         //   window.location = "login.html";
+    }
     $scope.EditProfile = function () {
         $location.path('profile.html');
     }
@@ -138,22 +149,22 @@ enozomApp.controller('FooterController', ['$scope', function($scope) {
     });
 }]);
 
-
-
 /* Init global settings and run the app */
-enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore", "$window", "$http", "initContext", function ($rootScope, settings, $state, $translate, $cookieStore, $window, $http, initContext) {
+enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore", "$window", "$http", "appConfigs", "$location", function ($rootScope, settings, $state, $translate, $cookieStore, $window, $http, appConfigs, $location) {
     $rootScope.$state = $state; // state to be accessed from view
     $translate.use(settings.globalLang);
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         // redirect to login page if not logged in    
         $rootScope.checkAccess(event, toState, toParams, fromState, fromParams);
     });
+
     $rootScope.checkAccess = function (event, toState, toParams, fromState, fromParams) {
         //if not logged in
         if (!$cookieStore.get('key')) {
-            // window.location = "login.html";
-           // $stateProvider.state("login", {});
-
+           
+            //  $window.location.href = "login.html";
+            $location.path('/login.html').replace();
+           // $state.go('login');
         }
         //if logged in 
         else {
@@ -163,7 +174,7 @@ enozomApp.run(["$rootScope", "settings", "$state", "$translate", "$cookieStore",
             }
             //if not public page
             if (toState.data.right * 1 !== 0) {
-                $http.get(initContext.get().apiBaseURL + 'Roles/CanAccess/' + toState.data.right).
+                $http.get(appConfigs.apiBaseURL + 'Roles/CanAccess/' + toState.data.right).
                 then(function (response) {
                     bypass = true;
                     if (!response.data) {

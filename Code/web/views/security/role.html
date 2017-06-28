@@ -1,0 +1,94 @@
+﻿
+<div class="portlet light bordered row">
+    <div class="portlet-title">
+        <i class="fa fa-check-square-o font-red-mint " aria-hidden="true"></i> <span class="caption-subject font-blue-madison bold uppercase font-red-mint">{{'roles.manage_role'|translate}}</span>
+    </div>
+
+</div>
+
+<!-- BEGIN: ACCORDION DEMO -->
+<div class="portlet light bg-inverse accordion-style">
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form ng-submit="save()" name="addForm" novalidate>
+                    <div class="portlet-body add">
+                        <div class="tab-content">
+                            <!-- PERSONAL INFO TAB -->
+
+                            <div class="col-md-6 col-sm-12">
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">{{'roles.role_name'|translate}}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" placeholder="{{'roles.role_name'|translate}}" class="form-control" name="roleName" ng-model="role.RoleName" required />
+                                        <p class="font-red-mint error" ng-show="hasError('roleName', 'required' )">
+                                            {{'roles.role_name_required'|translate}}
+                                        </p>
+                                    </div>
+                                    </div>
+                            </div>
+                            <!-- END PRIVACY SETTINGS TAB -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet light">
+                                <div class="portlet-title tabbable-line">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-check-square-o  font-red-mint" aria-hidden="true"></i> <span class="caption-subject font-blue-madison bold uppercase font-red-mint">{{'roles.rights'|translate}}</span>
+                                    </div>
+                                    <div class="tools tool col-md-2">
+                                       
+                                        <div class="input-group col-md-1" style="display: inline-block;    float: right;">
+                                            <div class="icheck-list">
+                                                <label class="in-b">
+                                                  <input type="checkbox" class="icheck" data-checkbox="icheckbox_flat-blue" style="float:right;">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <label class="control-label col-sm-12 col-md-11" style="font-size: 17px;">  اختر جميع الصلاحيات</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <accordion close-others="true">
+
+                        <accordion-group is-open="status.open" ng-repeat="feature in FeaturesRights">
+                            <accordion-heading>
+                                {{feature.FeatureName}}
+                                <i class="pull-right fa fa-angle-left" ng-class="{'fa-angle-down': status.open, 'fa-angle-left': !status.open}"></i>
+                            </accordion-heading>
+                            <div class="col-md-4 col-sm-12 clerfix" ng-repeat="right in feature.Rights">
+                                <div class="col-sm-12 role-style clerfix">
+                                    <div class="input-group">
+                                        <div class="icheck-list">
+                                            <label class="in-b">
+                                                <input type="checkbox" class="icheck" data-checkbox="icheckbox_flat-blue" ng-click="changeRight(right.RightID)" ng-checked="getRightSelection(right.RightID)"> {{right.RightName}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </accordion-group>
+
+                    </accordion>
+
+                    <div style="clear:both;"></div>
+                    <div class="margiv-top-10 main-action">
+                        <button type="submit" class="btn  green" ng-disabled="submitted"> حفظ <i class="fa fa-check" aria-hidden="true"></i></button>
+                        <button ng-click="redirect()" type="button" class="btn default"> إلغاء </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: ACCORDION DEMO -->

@@ -1,9 +1,9 @@
-﻿angular.module('enozomApp').factory('LoginFactory', ['$http', '$rootScope', 'initContext', function ($http, $rootScope, initContext) {
+﻿enozomApp.factory('LoginFactory', ['$http', '$rootScope', 'appConfigs', function ($http, $rootScope, appConfigs) {
     return {
         Login: function (username, password) {
             var result = 
             $http({
-                url: initContext.get().apiBaseURL + 'token',
+                url: appConfigs.apiBaseURL + 'token',
                 method: 'POST',
                 data: "userName=" + username + "&password=" + password + "&grant_type=password"
             });

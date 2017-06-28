@@ -20,6 +20,8 @@
     UserName: 'User Name',
     FullName: 'Full Name',
     Role: 'Role',
-    Active: 'Active',
-    unique_admin: 'Only 1 system admin is allowed!'
+    active: 'Active',
+    unique_admin: 'Only 1 system admin is allowed!',
+    fullname_required: 'Full Name is required!'
+
 }

@@ -1,16 +1,16 @@
 ﻿arTranslations.users = {
     manage_user: 'ادارة المستخدمين',
-    username: 'اسم المستخدم:',
+    username: 'اسم المستخدم',
     username_required: 'اسم المستخدم مطلوب!',
-    fullname: 'الاسم بالكامل:',
-    password: 'كلمة السر:',
+    fullname: 'الاسم بالكامل',
+    password: 'كلمة السر',
     type_a_password: 'اكتب كلمة سر',
     password_required: 'كلمة السر مطلوبة!',
-    confirm_password: 'تأكيد كلمة السر:',
+    confirm_password: 'تأكيد كلمة السر',
     confirm_pass: 'اكد كلمة السر',
     not_match_pass: 'تأكيد كلمة السر لايطابق الاصل!',
-    user_role: 'الدور:',
-    type_role: 'اكتب دور المستخدم',
+    user_role: 'الدور',
+    type_role: 'اختر الدور...',
     role_required: 'الدور مطلوب!',
     user_active: 'مفعل:',
     save_user: 'حفظ المستخدم',
@@ -20,6 +20,7 @@
     UserName: 'اسم المستخدم',
     FullName: 'الاسم بالكامل',
     Role: 'الدور',
-    Active: 'مفعل',
-    unique_admin: 'مسموح بمشرف واحد فقط علي النظام !'
+    active: 'مفعل',
+    unique_admin: 'مسموح بمشرف واحد فقط علي النظام !',
+    fullname_required: 'الاسم بالكامل مطلوب!'
 }

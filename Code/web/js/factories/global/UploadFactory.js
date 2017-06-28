@@ -1,8 +1,8 @@
-angular.module('enozomApp').factory('UploadFactory', ['$http', '$rootScope', 'settings', '$cookieStore', '$location', 'initContext', 'RequestFactory', 'Upload', function ($http, $rootScope, settings, $cookieStore, $location, initContext, RequestFactory, Upload) {
+angular.module('enozomApp').factory('UploadFactory', ['$http', '$rootScope', 'settings', '$cookieStore', '$location', 'appConfigs', 'RequestFactory', 'Upload', function ($http, $rootScope, settings, $cookieStore, $location, appConfigs, RequestFactory, Upload) {
         return {
-            upload: function (ControllerName, file, path,type) {
-                var data = {path: path,type:type};
-                return RequestFactory.upload('POST', initContext.get().apiBaseURL + ControllerName, data, file, null);
+            upload: function (file, path) {
+                var data = {path: path};
+                return RequestFactory.upload('POST', appConfigs.apiBaseURL + 'Upload?path=' + path, data, file, null);
             }
 
         }

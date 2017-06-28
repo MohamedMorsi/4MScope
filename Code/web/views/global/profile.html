@@ -1,44 +1,63 @@
-﻿<div class="row">
+﻿
+
+<div class="row">
     <div class="col-md-12">
         <div class="portlet light">
             <div class="portlet-title tabbable-line">
                 <div class="caption caption-md">
-                    <i class="icon-globe theme-font hide"></i>
-                    <span class="caption-subject font-blue-madison bold uppercase">Profile Account</span>
+                    <i class="icon-user font-red-mint" aria-hidden="true"></i> <span class="caption-subject font-blue-madison bold uppercase font-red-mint">الملف الشخصي</span>
                 </div>
-
             </div>
-            <div class="portlet-body">
+
+            <div class="portlet-body add">
                 <div class="tab-content">
                     <!-- PERSONAL INFO TAB -->
-                    <div class="tab-pane active" id="tab_1_1">
-                        <form ng-submit="submitUser()" name="addForm" novalidate>
-                            <div class="form-group">
-                                <label class="control-label">User Name</label>
-                                    <input type="text" placeholder="John" class="form-control" name="userName" ng-model="user.UserName" required />
-                                    <span class="error" ng-show="hasError('userName', 'required')" style="color:red">
-                                        {{'username_required'|translate}}
-                                    </span>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Full Name</label>
-                                <input type="text" placeholder="Doe" class="form-control" name="fullName" ng-model="user.FullName" required/>
-                                    <span class="error" ng-show="hasError('fullName', 'required')" style="color:red">
-                                        {{'fullname_required'|translate}}
-                                    </span>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Password</label>
-                                <input type="password" class="form-control" name="password" ng-model="user.UserPassword" required/>
-                                    <span class="error" ng-show="hasError('password', 'required')" style="color:red">
-                                        {{'password_required'|translate}}
-                                    </span>
-                             </div>
-                                <div class="margiv-top-10">
-                                    <input type="submit" class="btn green-haze" value="Save Changes"/>
-                                    <input type="button" class="btn default" ng-click="redirect()" value="Cancel"/>
+                    <div class="tab-pane active col-sm-12" id="tab_1_1">
+                        <form ng-submit="save()" name="addForm" novalidate>
+                            <div class="col-md-6 col-sm-12">
+                               
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">اسم المستخدم</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" placeholder="محمد" class="form-control" name="userName" ng-model="user.UserName" required />
+                                        <p class="col-md-offset-3 font-red-mint error" ng-show="hasError('userName', 'required' )" style="color:red">
+                                            {{'username_required'|translate}}
+                                        </p>
+                                    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">الاسم بالكامل</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" placeholder="محمد احمد" class="form-control" name="fullName" ng-model="user.FullName" required />
+                                        <p class="col-md-offset-3 font-red-mint error" ng-show="hasError('fullName', 'required')">{{'fullname_required'|translate}}</p>
+                                    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">كلمة المرور</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="password" class="form-control" name="password" ng-model="user.UserPassword" required />
+                                        <p class="col-md-offset-3 font-red-mint error" ng-show="hasError('password', 'required')" style="color:red">
+                                            {{'password_required'|translate}}
+                                        </p>
+                                        </div>
+                                    </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">تأكيد كلمة المرور</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="password" class="form-control" name="Repassword" ng-model="user.UserRePassword" required />
+                                        <p class="col-md-offset-3 font-red-mint error" ng-show="hasError('Repassword', 'required')" style="color:red">
+                                            {{'Repassword_required'|translate}}
+                                        </p>
+                                    </div>
+                                    </div>
                                 </div>
-</form>
+                            <div style="clear:both;"></div>
+                            <div class="margiv-top-10 main-action">
+                                <button type="submit" class="btn  green" ng-disabled="submitted"> حفظ <i class="fa fa-check" aria-hidden="true"></i></button>
+                                <button ng-click="redirect()"  type="button" class="btn default"> إلغاء </button>
+
+                            </div>
+                        </form>
                     </div>
                     <!-- END PRIVACY SETTINGS TAB -->
                 </div>
@@ -46,3 +65,5 @@
         </div>
     </div>
 </div>
+
+

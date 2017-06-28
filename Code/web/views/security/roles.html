@@ -1,0 +1,86 @@
+﻿<!-- ========== Usage ========== -->
+<div class="portlet light bordered row">
+    <div class="portlet-title">
+        <i class="fa fa-users font-red-mint " aria-hidden="true"></i> <span class="caption-subject font-blue-madison bold uppercase font-red-mint">{{'roles.list_roles'|translate}}</span>
+        <div class="tools">
+            <a href="#/role.html" class="btn bg-blue bg-font-blue mybtn">
+                {{'roles.add_role'|translate}}
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="portlet-title">
+        <div class="tools tool">
+            <a href="" class="btn bg-blue bg-font-blue filter-btn expand" data-original-title="" title="">
+                {{'filter'|translate}}
+                <i class="fa fa-filter"></i>
+            </a>
+
+        </div>
+
+    </div>
+    <div class="portlet-body" style="display: none;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ng-scope">
+                    <script type="text/ng-template" id="group-template.html">
+                        <div class="panel {{panelClass || 'panel-default'}}">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" style="color:#fa39c3">
+                                    <a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+                                        <span uib-accordion-header ng-class="{'text-muted': isDisabled}"> {{heading}} </span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                                <div class="panel-body" style="text-align: right" ng-transclude></div>
+                            </div>
+                        </div>
+                    </script>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer" id="datatable_reviews" aria-describedby="datatable_reviews_info" role="grid">
+                            <thead>
+                                <tr role="row" class="heading">
+                                    <th width="40%" class="sorting" tabindex="0" aria-controls="datatable_reviews" rowspan="1" colspan="1"> {{'roles.role_name'|translate}}</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="filter">
+                                    <td rowspan="1" colspan="1">
+                                        <input class="form-control form-filter input-sm" name="" ng-model="filterObject.SearchObject.RoleName" />
+                                    </td>
+                                    <td rowspan="1" colspan="1">
+                                        <div class="margin-bottom-5 in-b">
+                                            <button class="btn btn-sm  filter-submit margin-bottom bg-blue bg-font-blue" ng-click="getList()">
+                                                <i class="fa fa-search"></i> {{'search'|translate}}
+                                            </button>
+                                        </div>
+                                        <button class="btn btn-sm red-mint filter-cancel">
+                                            <i class="fa fa-times"></i> {{'cancel'|translate}}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<table ng-table="tableParams" class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
+    <tr ng-repeat="row in $data track by row.RoleID">
+        <td data-title="'roles.role_name'|translate" sortable="'RoleName'">{{row.RoleName}}</td>
+        <td data-title="'operations'|translate">
+            <button ng-click="editRow(row)" class="btn default btn-xs blue" role="button">
+                <i class="fa fa-edit"></i> {{'edit'|translate}}
+            </button>
+            <button ng-click="deleteRow(row)" class="btn default btn-xs black">
+                <i class="fa fa-trash-o"></i> {{'remove'|translate}}
+            </button>
+        </td>
+    </tr>
+</table>

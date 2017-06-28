@@ -1,8 +1,15 @@
-﻿angular.module('enozomApp').factory('UsersFactory', ['$http', 'settings', 'initContext', '$cookieStore'
-    , 'RequestFactory', function ($http, settings, initContext, $cookieStore, RequestFactory) {
+﻿angular.module('enozomApp').factory('UsersFactory', ['$http', 'settings', 'appConfigs', '$cookieStore'
+    , 'RequestFactory', function ($http, settings, appConfigs, $cookieStore, RequestFactory) {
     return {
         getCurrentUser: function () {
-            return RequestFactory.SendRequest('GET', initContext.get().apiBaseURL + 'Users/CurrentUser', null, null);
-        }
+            return RequestFactory.SendRequest('GET', appConfigs.apiBaseURL + 'Users/CurrentUser', null, null);
+        },
+        getCustomerServiceUsers: function (keyWordName) {
+            return RequestFactory.SendRequest('GET', appConfigs.apiBaseURL + 'Users/CustomerServiceUsers?keyWordName=' + keyWordName, null, null);
+        },
+        getSalesUsers: function (keyWordName) {
+            return RequestFactory.SendRequest('GET', appConfigs.apiBaseURL + 'Users/SalesUsers?keyWordName=' + keyWordName, null, null);
+        },
+
     }
 }]);

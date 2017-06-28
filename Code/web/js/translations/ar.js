@@ -11,7 +11,7 @@
     remove: 'مسح',
     edit: 'تعديل',
     Admin: 'المشرف',
-    search: 'بحث...',
+    search: 'بحث',
     manage: 'ادارة',
     print: 'طباعة',
     add: 'اضافة ',
@@ -27,5 +27,11 @@
     back: 'العودة',
     control_panel: 'لوحة التحكم',
     security_panel: 'نظام الحماية',
-    reports: 'التقارير'
+    reports: 'التقارير',
+    save: 'حفظ',
+    filter: 'تصفية البحث',
+    operations: 'العمليات',
+    city_name_required: 'اسم المدينة مطلوب',
+    something_went_wrong: 'حدث خطأ',
+    related_Data:'يوجد بيانات مرتبطة به..لا يمكن مسح هذه البيانات!!'
 };

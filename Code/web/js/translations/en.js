@@ -27,5 +27,10 @@
     back: 'Back',
     control_panel: 'Control Panel',
     security_panel: 'Security System',
-    reports: 'Reports'
+    reports: 'Reports',
+    save: 'Save',
+    filter: 'Filter',
+    operations: 'Operations',
+    something_went_wrong: 'Something went wrong',
+    related_Data: 'Cannot Delete Data,It has related data!!'
 };

@@ -1,0 +1,79 @@
+﻿
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title tabbable-line">
+                <div class="caption caption-md">
+                    <i class="icon-user font-red-mint" aria-hidden="true"></i> <span class="caption-subject font-blue-madison bold uppercase font-red-mint">{{'users.manage_user'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="portlet-body add">
+                <div class="tab-content">
+                    <!-- PERSONAL INFO TAB -->
+                    <div class="tab-pane active col-sm-12" id="tab_1_1">
+                        <form ng-submit="save()" name="addForm" novalidate>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">{{'users.username'|translate}}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" placeholder="{{'users.username'|translate}}" class="form-control" ng-model="user.UserName" name="userName" required />
+                                        <p class="font-red-mint error" ng-show="hasError('userName', 'required' )">{{'users.username_required'|translate}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">{{'users.fullname'|translate}}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" placeholder="{{'users.fullname'|translate}}" class="form-control" ng-model="user.FullName" name="fullName" required />
+                                        <p class="font-red-mint error" ng-show="hasError('fullName', 'required' )">{{'users.fullname_required'|translate}}</p>
+                                    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">{{'users.password'|translate}}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="password" placeholder="{{'users.password'|translate}}" class="form-control" ng-model="user.UserPassword" name="password" required />
+                                        <p class="font-red-mint error" ng-show="hasError('password', 'required' )">{{'users.password_required'|translate}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">{{'users.user_role'|translate}}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <ui-select ng-model="user.RoleID" theme="bootstrap" ng-required="true" name="roleName">
+                                            <ui-select-match placeholder="{{'users.type_role'|translate}}">{{$select.selected.RoleName}}</ui-select-match>
+                                            <ui-select-choices repeat="role.RoleID as role in rolesList | filter: {RoleName:$select.search}">
+                                                <div ng-bind-html="role.RoleName | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <p class="font-red-mint error" ng-show="hasError('roleName', 'required')">{{'users.role_required'|translate}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12 col-md-3">{{'users.active'|translate}}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <div class="input-group" style="width: 75%;display: inline-block;">
+                                            <div class="icheck-list">
+                                                <label class="in-b">
+                                                    <input type="checkbox" name="isActive" ng-model="user.IsActive"> 
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <div style="clear:both;"></div>
+                                <div class="margiv-top-10 main-action">
+
+                                    <button type="submit" class="btn  green" ng-disabled="submitted"> {{'save'|translate}} <i class="fa fa-check" aria-hidden="true"></i></button>
+                                    <button ng-click="redirect()" type="button" class="btn default"> {{'cancel'|translate}} </button>
+                              
+                                </div>
+</form>
+                    </div>
+                    <!-- END PRIVACY SETTINGS TAB -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

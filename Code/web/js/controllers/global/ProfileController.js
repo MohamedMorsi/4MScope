@@ -1,17 +1,18 @@
 ﻿angular.module('enozomApp').controller('ProfileController', ['$rootScope','$state', '$scope', '$translate', 'CRUDFactory', 'UsersFactory', function ($rootScope, $state, $scope, $translate, CRUDFactory, UsersFactory) {
     $rootScope.submitted = false;
     UsersFactory.getCurrentUser().success(function (data, status, headers, config) {
-        $scope.user = data;
+        $rootScope.user = data;
     });
     $scope.redirect = function () {
         if ($rootScope.previousState && $rootScope.previousParams) {
             $state.go($rootScope.previousState, $rootScope.previousParams);
         }
     }
-    $scope.submitUser = function () {
+    $scope.save = function () {
         $rootScope.submitted = true;
         if ($scope.addForm.$valid) {//submit form if valid                    
-            CRUDFactory.edit("Users", $scope.user, $scope.user.UserID).success(function (data, status, headers, config) {
+            CRUDFactory.edit("Users", $rootScope.user, $rootScope.user.UserID).success(function (data, status, headers, config) {
+                $rootScope.submitted = false;
                 if ($rootScope.previousState && $rootScope.previousParams) {
                     $state.go($rootScope.previousState, $rootScope.previousParams);
                 }
