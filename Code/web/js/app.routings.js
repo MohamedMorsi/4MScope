@@ -4,12 +4,12 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'righ
 	    $httpProvider.interceptors.push('sessionInjector');
 
 	    // Redirect any unmatched url
-	    $urlRouterProvider.otherwise("/pages/profile.html");
+	    $urlRouterProvider.otherwise("/pages/profile");
 
 	    $stateProvider
 
         .state('login', {
-            url: "/login.html",
+            url: "/login",
             templateUrl: "views/global/login.html",
             data: { pageTitle: 'Admin Dashboard Template' },
             controller: 'LoginController',
@@ -33,102 +33,102 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'righ
         })
 
     .state('users', {
-        url: "/users.html",
+        url: "/users",
         templateUrl: "views/security/users.html",
         parent: 'pages',
         data: { pageTitle: 'Users List', right: rights.PUBLIC },
-        controller: "UsersController",
+        controller: "UsersListController",
         resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'enozomApp',
                     files: [
-                        'js/controllers/security/UsersController.js'
+                        'js/controllers/security/UsersListController.js'
                     ]
                 }]);
             }]
         }
     })
     .state('UserAdd', {
-        url: "/user.html",
+        url: "/user",
         templateUrl: "views/security/User.html",
         parent: 'pages',
         data: { pageTitle: 'Add User', right: rights.PUBLIC },
-        controller: "ManageUserController",
+        controller: "UserController",
         resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'enozomApp',
                     files: [
-                        'js/controllers/security/UsersController.js'
+                        'js/controllers/security/UserController.js'
                     ]
                 }]);
             }]
         }
     })
     .state('UserEdit', {
-        url: "/user.html/:id",
+        url: "/users/:id",
         templateUrl: "views/security/User.html",
         parent: 'pages',
         data: { pageTitle: 'Edit User', right: rights.PUBLIC },
-        controller: "ManageUserController",
+        controller: "UserController",
         resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'enozomApp',
                     files: [
-                        'js/controllers/security/UsersController.js'
+                        'js/controllers/security/UserController.js'
                     ]
                 }]);
             }]
         }
     })
     .state('roles', {
-        url: "/roles.html",
+        url: "/roles",
         templateUrl: "views/security/roles.html",
         parent: 'pages',
         data: { pageTitle: 'Roles List', right: rights.PUBLIC },
-        controller: "RolesController",
+        controller: "RolesListController",
         resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'enozomApp',
                     files: [
-                        'js/controllers/security/RolesController.js'
+                        'js/controllers/security/RolesListController.js'
                     ]
                 }]);
             }]
         }
     })
     .state('RoleAdd', {
-        url: "/role.html",
+        url: "/role",
         templateUrl: "views/security/Role.html",
         parent: 'pages',
         data: { pageTitle: 'Add Role', right: rights.PUBLIC },
-        controller: "ManageRoleController",
+        controller: "RoleController",
         resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'enozomApp',
                     files: [
-                        'js/controllers/security/RolesController.js'
+                        'js/controllers/security/RoleController.js'
                     ]
                 }]);
             }]
         }
     })
     .state('RoleEdit', {
-        url: "/role.html/:id",
+        url: "/roles/:id",
         templateUrl: "views/security/Role.html",
         parent: 'pages',
         data: { pageTitle: 'Edit Role', right: rights.ROLES },
-        controller: "ManageRoleController",
+        controller: "RoleController",
         resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'enozomApp',
                     files: [
-                        'js/controllers/security/RolesController.js',
+                        'js/controllers/security/RoleController.js',
                         'js/factories/security/RolesFactory.js'
                     ]
                 }]);
@@ -137,7 +137,7 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'righ
     })
 
         .state('denied', {
-            url: "/denied.html",
+            url: "/denied",
             templateUrl: "views/global/Denied.html",
             parent: 'pages',
             data: { pageTitle: 'Access Denied', right: rights.PUBLIC },
@@ -156,7 +156,7 @@ enozomApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'righ
             }
         })
         .state('profile', {
-            url: "/profile.html",
+            url: "/profile",
             templateUrl: "views/global/profile.html",
             parent: 'pages',
             data: { pageTitle: 'Edit User Profile', right: rights.PUBLIC },
