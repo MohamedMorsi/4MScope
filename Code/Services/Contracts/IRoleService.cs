@@ -1,6 +1,7 @@
 ﻿using Data.Infrastructure;
 using Data.Repositories;
 using Model;
+using Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Services
     public interface IRoleService
     {
         List<Role> GetAll();
-        List<Role> GetAll(int PageNumber, int PageSize, string SortBy);
+        PagedResult<Role> GetAll(int PageNumber, int PageSize, string SortBy,string SortDirection);
         Role GetRole(int id);
         void CreateRole(Role Role);
         void UpdateRole(Role role);
@@ -24,5 +25,6 @@ namespace Services
         object getRoleSideMenu(int RoleId);
         object getFeaturesRights();
         bool canAccess(int role_id, int right_id);
+        PagedResult<Role> GetAll(FilterModel<Role> FilterObject);
     }
 }

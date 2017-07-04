@@ -1,5 +1,6 @@
 ﻿using Data.Infrastructure;
 using Model;
+using Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Data.Repositories
         object getRoleSideMenu(int RoleId);
         object getFeaturesRights();
         bool canAccess(int role_id, int right_id);
+
+        Model.DTO.PagedResult<Role> GetAll(FilterModel<Role> FilterObject);
     }
 
 

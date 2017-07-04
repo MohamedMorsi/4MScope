@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\FilterModel.cs" />
+    <Compile Include="DTO\PagedResult.cs" />
+    <Compile Include="DTO\SettingDTO.cs" />
     <Compile Include="DTO\StoreDTO.cs" />
     <Compile Include="Enums\TransactionTypesEnum.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -52,6 +55,12 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Partials\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{54ba044a-9148-4625-868a-6add92e87a9c}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

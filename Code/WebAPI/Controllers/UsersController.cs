@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Model;
+using Model.DTO;
 
 namespace WebAPI.Controllers
 {
@@ -26,11 +27,11 @@ namespace WebAPI.Controllers
 
         // GET api/Users/1/10
         [HttpGet]
-        [Route("api/Users/{PageNumber}/{PageSize}/{SortBy}")]
-        [ResponseType(typeof(List<User>))]
-        public List<User> GetUsers(int PageNumber, int PageSize, string SortBy = "")
+        [Route("api/Cities/{PageNumber}/{PageSize}/{SortBy}/{SortDirection}")]
+        [ResponseType(typeof(Model.DTO.PagedResult<User>))]
+        public PagedResult<User> GetUsers(int PageNumber, int PageSize, string SortBy = "",string SortDirection = "")
         {
-            return _userService.GetAll(PageNumber,PageSize,SortBy);
+            return _userService.GetAll(PageNumber,PageSize,SortBy,SortDirection);
         }
         // GET api/Users/5
         [ResponseType(typeof(User))]
@@ -137,6 +138,20 @@ namespace WebAPI.Controllers
             }
 
             return Ok(user);
+        }
+
+        // POST api/Users/FilteredList"
+        [HttpPost]
+        [Route("api/Users/FilteredList")]
+        [ResponseType(typeof(Model.DTO.PagedResult<User>))]
+        public Model.DTO.PagedResult<User> LoadFilteredUsers(FilterModel<User> FilterObject)
+        {
+            //if no search is applied
+            if (FilterObject.SearchObject == null)
+            {
+                FilterObject.SearchObject = new Model.User();
+            }
+            return _userService.GetAll(FilterObject);
         }
 
     }

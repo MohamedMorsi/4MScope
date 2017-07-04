@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -44,7 +45,7 @@ namespace Data.Infrastructure
             return dbSet.Add(entity);
         }
 
-        public virtual void Update(int id,T entity)
+        public virtual void Update(int id, T entity)
         {
             var local = dbSet.Find(id);
             if (local != null)
@@ -79,19 +80,83 @@ namespace Data.Infrastructure
             return dbSet.ToList();
         }
 
-        public virtual IEnumerable<T> GetAll(int PageNumber, int PageSize,string SortBy)
+        public virtual Model.DTO.PagedResult<T> GetAll(int PageNumber, int PageSize, List<string> includes, string SortBy = "", string SortDirection = "")
         {
+            Model.DTO.PagedResult<T> PagedList = new Model.DTO.PagedResult<T>();
+            IQueryable<T> Query = dbSet.AsQueryable<T>();
+            foreach (string include in includes)
+            {
+                Query = Query.Include(include);
+            }
+
             string SortByParam = "CreationDate";
+            string SortDirectionParam = "ASC";
+
             if (!string.IsNullOrEmpty(SortBy))
             {
                 SortByParam = SortBy;
             }
+            if (!string.IsNullOrEmpty(SortDirection))
+            {
+                SortDirectionParam = SortDirection;
+            }
 
-            var propertyInfo = typeof(T).GetProperty(SortByParam);
-            return dbSet.Take(PageSize)
-                .OrderBy(t=> propertyInfo.GetValue(t, null))
-                .Skip((PageNumber - 1) * PageSize).ToList();
-        }        
+
+            Expression parent = GetParentEntity<T>(SortByParam);
+            Type typeToConvertTo = parent.Type;
+
+            Query = BuilSortingQuery(Query, SortByParam, SortDirectionParam, typeToConvertTo);
+
+            Query = Query.Take(PageSize);
+
+            PagedList.Results = Query.Skip((PageNumber - 1) * PageSize).ToList();
+            PagedList.TotalRecords = dbSet.Count();
+            return PagedList;
+        }
+
+
+        public virtual Model.DTO.PagedResult<T> GetAll(int PageNumber, int PageSize, List<string> includes, Expression<Func<T, bool>> filter = null, string SortBy = "", string SortDirection = "")
+        {
+            Model.DTO.PagedResult<T> PagedList = new Model.DTO.PagedResult<T>();
+            IQueryable<T> Query = dbSet.AsQueryable<T>();
+            foreach (string include in includes)
+            {
+                Query = Query.Include(include);
+            }
+
+            string SortByParam = "CreationDate";
+            string SortDirectionParam = "ASC";
+
+            if (!string.IsNullOrEmpty(SortBy))
+            {
+                SortByParam = SortBy;
+            }
+            if (!string.IsNullOrEmpty(SortDirection))
+            {
+                SortDirectionParam = SortDirection;
+            }
+            if (filter != null)
+            {
+                Query = Query.Where(filter);
+
+                PagedList.TotalRecords = Query.ToList().Count();
+
+            }
+            else
+            {
+                PagedList.TotalRecords = dbSet.Count();
+            }
+            Expression parent = GetParentEntity<T>(SortByParam);
+            Type typeToConvertTo = parent.Type;
+
+            Query = BuilSortingQuery(Query, SortByParam, SortDirectionParam, typeToConvertTo);
+
+            Query = Query.Skip((PageNumber - 1) * PageSize);
+
+            PagedList.Results = Query.Take(PageSize).ToList();
+            // PagedList.TotalRecords = dbSet.Count();
+            return PagedList;
+        }
 
         public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
         {
@@ -103,7 +168,110 @@ namespace Data.Infrastructure
             return dbSet.Where(where).FirstOrDefault<T>();
         }
 
+
         #endregion
-    
+
+        #region Sorting Generic Query
+        private IQueryable<T> BuilSortingQuery(IQueryable<T> Query, string SortByParam, string SortDirectionParam, Type typeToConvertTo)
+        {
+            switch (Type.GetTypeCode(typeToConvertTo))
+            {
+                case TypeCode.Int32:
+                    if (SortDirectionParam == "ASC")
+                    {
+                        Query = Query.OrderBy(GetExpression<T, int>(SortByParam));
+                    }
+                    else
+                    {
+                        Query = Query.OrderByDescending(GetExpression<T, int>(SortByParam));
+                    }
+                    break;
+                case TypeCode.Boolean:
+                    if (SortDirectionParam == "ASC")
+                    {
+                        Query = Query.OrderBy(GetExpression<T, bool>(SortByParam));
+                    }
+                    else
+                    {
+                        Query = Query.OrderByDescending(GetExpression<T, bool>(SortByParam));
+                    }
+                    break;
+                case TypeCode.Double:
+                    if (SortDirectionParam == "ASC")
+                    {
+                        Query = Query.OrderBy(GetExpression<T, Double>(SortByParam));
+                    }
+                    else
+                    {
+                        Query = Query.OrderByDescending(GetExpression<T, Double>(SortByParam));
+                    }
+                    break;
+                case TypeCode.Decimal:
+                    if (SortDirectionParam == "ASC")
+                    {
+                        Query = Query.OrderBy(GetExpression<T, decimal>(SortByParam));
+                    }
+                    else
+                    {
+                        Query = Query.OrderByDescending(GetExpression<T, decimal>(SortByParam));
+                    }
+                    break;
+                case TypeCode.DateTime:
+                    if (SortDirectionParam == "ASC")
+                    {
+                        Query = Query.OrderBy(GetExpression<T, DateTime>(SortByParam));
+                    }
+                    else
+                    {
+                        Query = Query.OrderByDescending(GetExpression<T, DateTime>(SortByParam));
+                    }
+                    break;
+                case TypeCode.Object://mainly for nullable datetime
+                    if (SortDirectionParam == "ASC")
+                    {
+                        Query = Query.OrderBy(GetExpression<T, DateTime?>(SortByParam));
+                    }
+                    else
+                    {
+                        Query = Query.OrderByDescending(GetExpression<T, DateTime?>(SortByParam));
+                    }
+                    break;
+                default:
+                    if (SortDirectionParam == "ASC")
+                    {
+                        Query = Query.OrderBy(GetExpression<T, string>(SortByParam));
+                    }
+                    else
+                    {
+                        Query = Query.OrderByDescending(GetExpression<T, string>(SortByParam));
+                    }
+                    break;
+            }
+            return Query;
+        }
+
+        private Expression<Func<TEntity, TResult>> GetExpression<TEntity, TResult>(string prop)
+        {
+            var param = Expression.Parameter(typeof(TEntity), "p");
+            var parts = prop.Split('.');
+
+            Expression parent = parts.Aggregate<string, Expression>(param, Expression.Property);
+            Expression conversion = Expression.Convert(parent, parent.Type);
+
+            return Expression.Lambda<Func<TEntity, TResult>>(conversion, param);
+
+        }
+
+        private Expression GetParentEntity<TEntity>(string prop)
+        {
+            var param = Expression.Parameter(typeof(TEntity), "p");
+            var parts = prop.Split('.');
+
+            Expression parent = parts.Aggregate<string, Expression>(param, Expression.Property);
+            return parent;
+        }
+
+
+        #endregion
     }
 }

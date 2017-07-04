@@ -1,8 +1,10 @@
 ﻿using Data.Infrastructure;
 using Model;
+using Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,6 +50,16 @@ namespace Data.Repositories
                     Where(a => a.RoleID == role_id
                        && a.RightID == right_id).ToList().Count > 0;
         }
+
+        public Model.DTO.PagedResult<Role> GetAll(FilterModel<Role> FilterObject)
+        {
+            Model.DTO.PagedResult<Role> RoleList = new Model.DTO.PagedResult<Role>();
+            Expression<Func<Role, bool>> SearchCriteria = r => (r.RoleName.Contains(FilterObject.SearchObject.RoleName) || string.IsNullOrEmpty(FilterObject.SearchObject.RoleName));
+            RoleList = this.GetAll(FilterObject.PageNumber, FilterObject.PageSize, FilterObject.Includes, SearchCriteria, FilterObject.SortBy, FilterObject.SortDirection);
+            return RoleList;
+        }
+
+
     }
 
 

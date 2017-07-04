@@ -1,6 +1,7 @@
 ﻿using Data.Infrastructure;
 using Data.Repositories;
 using Model;
+using Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,10 @@ namespace Services
             List<Store> Stores = StoreRepository.GetAll().ToList();
             return Stores;
         }
-        public List<Store> GetAll(int PageNumber, int PageSize, string SortBy = "")
+        public PagedResult<Store> GetAll(int PageNumber, int PageSize, string SortBy = "", string SortDirection = "")
         {
-            List<Store> Stores = StoreRepository.GetAll(PageNumber,PageSize,SortBy).ToList();
+            List<string> Includes = new List<string>();
+            Model.DTO.PagedResult<Store> Stores = StoreRepository.GetAll(PageNumber, PageSize, Includes, SortBy, SortDirection);
             return Stores;
         }
         public Store GetStore(int id)
@@ -64,8 +66,18 @@ namespace Services
             unitOfWork.Commit();
         }
 
-   
 
+
+        #endregion
+
+        #region Custom Methods
+        public PagedResult<Store> GetAll(FilterModel<Store> FilterObject)
+        {
+            FilterObject.Includes = new List<string>();
+            FilterObject.Includes.Add("Area");
+            FilterObject.Includes.Add("Area.City");
+            return StoreRepository.GetAll(FilterObject);
+        }
         #endregion
     }
 }

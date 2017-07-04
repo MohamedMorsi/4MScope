@@ -18,11 +18,10 @@ namespace Model
         public bool IsActive { get; set; }
 
         public Role Role { get; set; }
-  
+
 
         public User()
         {
-
         }
     }
 }

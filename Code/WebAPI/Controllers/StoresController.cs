@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Model;
+using Model.DTO;
 
 
 namespace WebAPI.Controllers
@@ -27,11 +28,11 @@ namespace WebAPI.Controllers
 
         // GET api/Stores/1/10
         [HttpGet]
-        [Route("api/Stores/{PageNumber}/{PageSize}/{SortBy}")]
-        [ResponseType(typeof(List<Store>))]
-        public List<Store> GetStores(int PageNumber, int PageSize, string SortBy = "")
+        [Route("api/Cities/{PageNumber}/{PageSize}/{SortBy}/{SortDirection}")]
+        [ResponseType(typeof(Model.DTO.PagedResult<Store>))]
+        public PagedResult<Store> GetStores(int PageNumber, int PageSize, string SortBy = "",string SortDirection= "")
         {
-            return _StoreService.GetAll(PageNumber,PageSize,SortBy);
+            return _StoreService.GetAll(PageNumber,PageSize,SortBy,SortDirection);
         }
 
         // GET api/Users/5
@@ -116,7 +117,18 @@ namespace WebAPI.Controllers
             return Store != null;
         }
 
-
+        [HttpPost]
+        [Route("api/Stores/FilteredList")]
+        [ResponseType(typeof(Model.DTO.PagedResult<Store>))]
+        public Model.DTO.PagedResult<Store> LoadFilteredUsers(FilterModel<Store> FilterObject)
+        {
+            //if no search is applied
+            if (FilterObject.SearchObject == null)
+            {
+                FilterObject.SearchObject = new Model.Store();
+            }
+            return _StoreService.GetAll(FilterObject);
+        }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Data.Infrastructure;
 using Data.Repositories;
 using Model;
+using Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,9 +33,10 @@ namespace Services
             return Roles;
         }
 
-        public List<Role> GetAll(int PageNumber,int PageSize,string SortBy = "")
+        public PagedResult<Role> GetAll(int PageNumber, int PageSize, string SortBy = "", string SortDirection = "")
         {
-            List<Role> Roles = RoleRepository.GetAll(PageNumber, PageSize, SortBy).ToList();
+            List<string> Includes = new List<string>();
+            Model.DTO.PagedResult<Role> Roles = RoleRepository.GetAll(PageNumber, PageSize, Includes, SortBy, SortDirection);
             return Roles;
         }
 
@@ -108,6 +110,12 @@ namespace Services
         public bool canAccess(int role_id, int right_id)
         {
             return this.RoleRepository.canAccess(role_id, right_id);
+        }
+
+        public PagedResult<Role> GetAll(FilterModel<Role> FilterObject)
+        {
+            FilterObject.Includes = new List<string>();
+            return RoleRepository.GetAll(FilterObject);
         }
         #endregion
     }

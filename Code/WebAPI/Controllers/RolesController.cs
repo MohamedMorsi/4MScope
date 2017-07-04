@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Model;
+using Model.DTO;
 
 namespace WebAPI.Controllers
 {
@@ -25,11 +26,11 @@ namespace WebAPI.Controllers
 
         // GET api/Roles/1/10
         [HttpGet]
-        [Route("api/Roles/{PageNumber}/{PageSize}/{SortBy}")]
-        [ResponseType(typeof(List<Role>))]
-        public List<Role> GetRoles(int PageNumber,int PageSize, string SortBy = "")
+        [Route("api/Roles/{PageNumber}/{PageSize}/{SortBy}/{SortDirection}")]
+        [ResponseType(typeof(Model.DTO.PagedResult<Role>))]
+        public PagedResult<Role> GetRoles(int PageNumber, int PageSize, string SortBy = "", string SortDirection = "")
         {
-            return _roleService.GetAll(PageNumber,PageSize,SortBy);
+            return _roleService.GetAll(PageNumber, PageSize, SortBy, SortDirection);
         }
 
         // GET api/Roles/5
@@ -139,6 +140,20 @@ namespace WebAPI.Controllers
             Helpers.SecurityHelper _security = new Helpers.SecurityHelper();
             int role_id = _security.getRoleIDFromToken();
             return _roleService.canAccess(role_id, right_id);
+        }
+
+        // POST api/Roles/FilteredList"
+        [HttpPost]
+        [Route("api/Roles/FilteredList")]
+        [ResponseType(typeof(Model.DTO.PagedResult<Role>))]
+        public Model.DTO.PagedResult<Role> LoadFilteredUsers(FilterModel<Role> FilterObject)
+        {
+            //if no search is applied
+            if (FilterObject.SearchObject == null)
+            {
+                FilterObject.SearchObject = new Model.Role();
+            }
+            return _roleService.GetAll(FilterObject);
         }
     }
 }

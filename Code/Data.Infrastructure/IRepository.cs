@@ -13,6 +13,7 @@ namespace Data.Infrastructure
         T Add(T entity);
         // Marks an entity as modified
         void Update(int id, T entity);
+    
         // Marks an entity to be removed
         void Delete(T entity);
         void Delete(Expression<Func<T, bool>> where);
@@ -23,7 +24,9 @@ namespace Data.Infrastructure
         // Gets all entities of type T
         IEnumerable<T> GetAll();
         //Gets all entities with paging with type T
-        IEnumerable<T> GetAll(int PageNumber, int PageSize,string SortBy);
+        Model.DTO.PagedResult<T> GetAll(int PageNumber, int PageSize, List<string> includes, string SortBy, string SortDirection);
+        //Gets Filtered Entities with paging and sorting
+        Model.DTO.PagedResult<T> GetAll(int PageNumber, int PageSize, List<string> includes, Expression<Func<T, bool>> filter = null, string SortBy = "", string SortDirection = "");
         // Gets entities using delegate
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
     }

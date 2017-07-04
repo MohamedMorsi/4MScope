@@ -14,6 +14,7 @@ namespace Data
     {
         public DBEntities() : base("DBEntities") {
             this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<Feature> Features { get; set; }
@@ -30,7 +31,10 @@ namespace Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //Disable Cascade delete
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
             modelBuilder.Configurations.Add(new FeatureConfiguration());
             modelBuilder.Configurations.Add(new RightConfiguration());
             modelBuilder.Configurations.Add(new RoleConfiguration());

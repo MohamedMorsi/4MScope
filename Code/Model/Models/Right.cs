@@ -16,6 +16,7 @@ namespace Model
         public string RightNameAr { get; set; }
         public string MenuIcon { get; set; }
         public string RightURL { get; set; }
+        public bool IsVisible { get; set; }
 
         public Feature Feature { get; set; }
         public List<RoleRight> RoleRights { get; set; }

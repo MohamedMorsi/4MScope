@@ -12,6 +12,7 @@ namespace Model
         public string RoleName { get; set; }
         public string RoleNameAr { get; set; }
 
+        public bool? IsSystemRole { get; set; }
 
         public List<RoleRight> RoleRights { get; set; }
         public List<User> Users { get; set; }

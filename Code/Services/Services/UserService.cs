@@ -1,6 +1,7 @@
 ﻿using Data.Infrastructure;
 using Data.Repositories;
 using Model;
+using Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,11 @@ namespace Services
             List<User> Users = userRepository.GetAll().ToList();
             return Users;
         }
-        public List<User> GetAll(int PageNumber, int PageSize, string SortBy = "")
+        public PagedResult<User> GetAll(int PageNumber, int PageSize, string SortBy = "", string SortDirection = "")
         {
-            List<User> Users = userRepository.GetAll(PageNumber, PageSize,SortBy).ToList();
+            List<string> Includes = new List<string>();
+            Includes.Add("Role");
+            Model.DTO.PagedResult<User> Users = userRepository.GetAll(PageNumber, PageSize, Includes, SortBy, SortDirection);
             return Users;
         }
         public User GetUser(int id)
@@ -70,6 +73,13 @@ namespace Services
             {
                 throw ex;
             }
+        }
+
+        public PagedResult<User> GetAll(FilterModel<User> FilterObject)
+        {
+            FilterObject.Includes = new List<string>();
+            FilterObject.Includes.Add("Role");
+            return userRepository.GetAll(FilterObject);
         }
 
         #endregion
